@@ -1,27 +1,27 @@
 # Coding Rule（精简）
 ## 基本
 ### 环境
-操作系统：mac os<br>
-开发软件：Xcode9.0以上<br>
+- 操作系统：mac os<br>
+- 开发软件：Xcode9.0以上<br>
 ### 命名简单规范（简明扼要，具体参照工程的举例模块书写方式）
 #### 目录名称(业务模块)
 English(中文后缀) 例：Login(登录)，Example(举例)
 #### 类的名称
-业务类：项目名称+模块名称+类型 例：<br>
+- 业务类：项目名称+模块名称+类型 例：<br>
 ZJLoginController,ZJExampleController,ZJExampleModel,ZJExampleCell<br>
 如果为二级界面，请升级模块名称 例：登录二级界面的注册功能(ZJLoginRegistController)<br>
-个人工具类: 个人名字缩写+功能+类型 例：SBTextView
+- 个人工具类: 个人名字缩写+功能+类型 例：SBTextView
 #### 方法名称
-驼峰命名   例：
-- (void)initContent{}  （加载视图方法）<br>
-- (void)requestAction:(UIButton *) btn{} (点击按钮请求事件)
+- 驼峰命名   例：
+—(void)initContent{}  （加载视图方法）<br>
+—(void)requestAction:(UIButton *) btn{} (点击按钮请求事件)
 #### 对象命名
 int count = 0;(计数器)
 UIViewController *login = nil;(登录控制器)
 UIButton *commitButton = nil; (提交按钮)
 ### 公共API设计规范
 格式驼峰 ，简单明了 参照系统API  例：<br>
-- (instancetype)initWithAccount:(NSString *)account password:(NSString *)password callback:(void(^)(BOOL success,id other))callback;
+— (instancetype)initWithAccount:(NSString *)account password:(NSString *)password callback:(void(^)(BOOL success,id other))callback;
 ## 项目开始
 1.APP采用object-c纯代码开发，末使用故事面板(storyboard)<br>
 2.布局我们采用Masonry布局。<br>
