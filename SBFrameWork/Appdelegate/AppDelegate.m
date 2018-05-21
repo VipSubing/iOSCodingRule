@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "AppDelegate+Setup.h"
 #import "ZJLoginController.h"
+#import "UMMobClick/MobClick.h"
+#import "TuiSongManager.h"
 @interface AppDelegate ()
 
 @end
@@ -22,11 +24,19 @@
     _window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen] .bounds];
     _window.backgroundColor = [UIColor whiteColor];
     [_window makeKeyAndVisible];
-//    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:module];
     _window.rootViewController = [[ZJLoginController alloc] init];
     return YES;
 }
 
+
+- (void)launchRegist{
+    //友盟注册
+    UMConfigInstance.appKey = @"";
+    UMConfigInstance.channelId = @"appstore";
+    [MobClick startWithConfigure:UMConfigInstance];
+    //个推注册
+    [[TuiSongManager shareManager] registerUserNotification];
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -53,6 +63,6 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
+ 
 
 @end

@@ -28,10 +28,14 @@ extern NSString *const kSBUserInfoNotificationValue;
 
 @property (copy,nonatomic) NSString *userName;
 // account
-@property (copy,nonatomic) NSString *mobileCode;
+@property (copy,nonatomic) NSString *accout;
 //password 的充分条件是 mobile code
 @property (copy,nonatomic) NSString *password;
 
+
+@property (copy,nonatomic) NSString *oldAccount;
+
+@property (copy,nonatomic) NSString *oldPassword;
 /**
  单例化一个用户信息代理, 首先会从序列化磁盘里面拿，没有则直接创建一个
 

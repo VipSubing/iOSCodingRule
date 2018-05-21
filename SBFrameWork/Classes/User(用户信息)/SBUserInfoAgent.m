@@ -66,7 +66,7 @@ static SBFileItem *fileItem;
 }
 #pragma mark - Observe And Notification
 - (void)postCurrentUserChangeNotification{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSBUserInfoCurrentUserChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSBUserInfoCurrentUserChangeNotification object:nil userInfo:@{kSBUserInfoNotificationKeyPath:@"user",kSBUserInfoNotificationValue:self}];
 }
 - (void)addObserve{
     @weakify(self);
@@ -78,19 +78,24 @@ static SBFileItem *fileItem;
         @strongify(self);
         [self postValueChangeNotificationWithKey:@"userName" value:x];
     }];
-    [[RACObserve(self,mobileCode) skip:1] subscribeNext:^(id  _Nullable x) {
+    [[RACObserve(self,accout) skip:1] subscribeNext:^(id  _Nullable x) {
         @strongify(self);
-        [self postValueChangeNotificationWithKey:@"mobileCode" value:x];
+        [self postValueChangeNotificationWithKey:@"account" value:x];
     }];
 }
 - (void)postValueChangeNotificationWithKey:(NSString *)key value:(id)value{
     [[NSNotificationCenter defaultCenter] postNotificationName:kSBUserInfoValueChangeNotification object:nil userInfo:@{kSBUserInfoNotificationKeyPath:key,kSBUserInfoNotificationValue:self}];
 }
 #pragma mark - atrributes
+- (void)setAccout:(NSString *)accout{
+    self.oldAccount = _accout;
+    _accout = accout;
+}
 - (NSString *)password{
-    return [SSKeychain passwordForService:kSBUserInfoAgentAccountKey account:_mobileCode];
+    return [SSKeychain passwordForService:kSBUserInfoAgentAccountKey account:_accout];
 }
 - (void)setPassword:(NSString *)password{
-    [SSKeychain setPassword:password forService:kSBUserInfoAgentAccountKey account:_mobileCode];
+    self.oldPassword = self.password;
+    [SSKeychain setPassword:password forService:kSBUserInfoAgentAccountKey account:_accout];
 }
 @end

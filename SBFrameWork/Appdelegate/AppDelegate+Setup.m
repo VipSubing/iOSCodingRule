@@ -38,6 +38,8 @@ static NSString* const kURL_Reachability__Address = @"www.baidu.com";
     [self webImageDecodeSetup];
     //realm
     [self setupRealm];
+    
+    [self setNavigationAppearance];
 }
 - (void)debugSetup{
 #if DEBUG
@@ -50,7 +52,7 @@ static NSString* const kURL_Reachability__Address = @"www.baidu.com";
 #endif
 }
 - (void)crashSetup{
-#if 1
+#if RELEASE
     [AvoidCrash becomeEffective];
 #endif
 }
@@ -60,17 +62,23 @@ static NSString* const kURL_Reachability__Address = @"www.baidu.com";
         //添加userInfo 当前用户更换的通知
         [[NSNotificationCenter defaultCenter] addObserver:self selector:_cmd name:kSBUserInfoCurrentUserChangeNotification object:nil];
     });
-    SBUserInfo.userId = @"123456_test";
+    NSString *realmIdentify = @"defualt";
     if (SBUserInfo.userId.length) {
-        return;
+        realmIdentify = SBUserInfo.userId;
     }
     RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];
     // 使用默认的目录，但是请将文件名替换为用户名
     config.fileURL = [[[config.fileURL URLByDeletingLastPathComponent]
-                       URLByAppendingPathComponent:SBUserInfo.userId]
+                       URLByAppendingPathComponent:realmIdentify]
                       URLByAppendingPathExtension:@"realm"];
     // 将该配置设置为默认 Realm 配置
     [RLMRealmConfiguration setDefaultConfiguration:config];
+}
+- (void)setNavigationAppearance{
+    [[UIBarButtonItem appearance]setBackButtonTitlePositionAdjustment:UIOffsetMake(NSIntegerMin, NSIntegerMin) forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [UINavigationBar appearance].tintColor = StandardDefaultColor;
+    [[UINavigationBar appearance] setBarTintColor:StandardDefaultColor];
 }
 - (void)webUserAgentSetup{
     UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
@@ -112,7 +120,7 @@ static NSString* const kURL_Reachability__Address = @"www.baidu.com";
 }
 - (void)userPreferences{
     //第一次启动
-    if (0) {
+    if (SBUserInfo.accout.length == 0) {
         SBUserDefault.allowReceiveMessage = YES;
         SBUserDefault.allowMessageVoice = YES;
         SBUserDefault.allowMessageVibration = YES;

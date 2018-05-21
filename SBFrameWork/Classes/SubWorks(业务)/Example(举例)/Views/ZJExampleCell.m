@@ -30,13 +30,13 @@ static CGFloat kCellBottomSpace = 10;
     _nameLabel.textAlignment = NSTextAlignmentCenter;
     [self.contentView addSubview:_nameLabel];
     
-    _contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(_headImageView.right+10, kCellTopSpace, self.width-_headImageView.right-20, 0)];
+    _contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(_headImageView.right+10, kCellTopSpace, SCREEN_WIDTH-_headImageView.right-20, 0)];
     _contentLabel.font = Content30PxH2Font;
     _contentLabel.textColor = ContentDefaultColor;
     _contentLabel.numberOfLines = 0;
     [self.contentView addSubview:_contentLabel];
     
-    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.width-80-kCellBottomSpace, 0, 80, 15)];
+    _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-80-kCellBottomSpace, 0, 80, 15)];
     _dateLabel.font = Desc24PxH3Font;
     _dateLabel.textColor = DescDefaultColor;
     _dateLabel.textAlignment = NSTextAlignmentRight;

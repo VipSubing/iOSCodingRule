@@ -49,7 +49,7 @@
 - (void)requestList{
     SBHttpRequest *reqeust = [SBHttpRequest defaultRequest];
     NSMutableDictionary *param = [SBHttpRequest defaultParam];
-    [param setObject:SBUserInfo.userId forKey:@"userId"];
+    [param setObject:@"" forKey:@"userId"];
     [param setObject:@"12345" forKey:@"ids"];
     [reqeust sendRequestUrl:@"" requestParameter:param completionWithSuccess:^(YTKRequest * _Nonnull request, id  _Nonnull responseObject) {
         //数据操作

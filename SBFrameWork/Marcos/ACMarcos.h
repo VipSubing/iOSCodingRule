@@ -29,7 +29,8 @@
 #define STATUS_HEIGHT [UIApplication sharedApplication].statusBarFrame.size.height
 #define NAVI_HEIGHT self.navigationController.navigationBar.bounds.size.height
 #define TABBAR_HEIGHT 49
-
+//系统提示框 AlertController m :message block : 点击事件
+#define Alert(m,block) [EMAlertView alertWithMessage:m handle:block];
 
 //提示框
 #define SBShowStatus(status) \

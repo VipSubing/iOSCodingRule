@@ -63,7 +63,8 @@
     [param setObject:@"3" forKey:@"platform"];
     [request sendRequestWithBaseUrl:@"http://bayi-api.hzbayi.com:81/V2.1.0" requestUrl:@"user/login" requestParameter:param completionWithSuccess:^(YTKRequest * _Nonnull request, id  _Nonnull responseObject) {
         if (responseObject) {
-            //成功
+            //发送成功通知
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSBUserInfoCurrentUserChangeNotification object:nil];
             //模拟跳转
             [self toExample];
         }else{
@@ -75,8 +76,6 @@
     
 }
 - (void)toExample{
-    ZJExampleController *example = [[ZJExampleController alloc] init];
-    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:example];
-    [self presentViewController:navi animated:YES completion:nil];
+    [UIApplication sharedApplication].keyWindow.rootViewController = [AppDelegate  applicationRoot];
 }
 @end
