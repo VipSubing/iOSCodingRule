@@ -48,10 +48,21 @@
 }
 - (void)requestList{
     SBHttpRequest *reqeust = [SBHttpRequest defaultRequest];
+    if (self.pageIndex == 1) {
+        //只有第一页的数据才需要缓存
+        reqeust.cacheInterval = 60*60*24;
+    }
+    
     NSMutableDictionary *param = [SBHttpRequest defaultParam];
-    [param setObject:@"" forKey:@"userId"];
+    
+//    [param setObject:SBUserInfo.userId forKey:@"userId"];
     [param setObject:@"12345" forKey:@"ids"];
     [reqeust sendRequestUrl:@"" requestParameter:param completionWithSuccess:^(YTKRequest * _Nonnull request, id  _Nonnull responseObject) {
+        //判断是否数据来之cache  ,如果没有设置cache 则不必要
+        if ([request isDataFromCache]) {
+            //yes
+            SBShowStatus(request.error.userInfo[SBRequestFailureErrorDescKey]);
+        }
         //数据操作
         if (responseObject) {
             //返回成功，并且pageindex == 1，表示首次请求或者下拉刷新
@@ -89,6 +100,7 @@
         SBShowStatus(error.userInfo[SBRequestFailureErrorDescKey]);
         //没有数据
         if (!self.datas.count) {
+            
             //链接失败 显示网络异常的占位图
             [self.emptyServices configEmptyForStyle:SBPlaceHolderStyleWithLostNet];
             self.emptyServices.style.title = error.userInfo[SBRequestFailureErrorDescKey];

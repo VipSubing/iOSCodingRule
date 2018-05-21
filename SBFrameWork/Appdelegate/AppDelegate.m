@@ -21,6 +21,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //launch setup
     [self launchSetup];
+    [self launchRegist];
     _window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen] .bounds];
     _window.backgroundColor = [UIColor whiteColor];
     [_window makeKeyAndVisible];

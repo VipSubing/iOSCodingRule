@@ -69,20 +69,28 @@ static SBFileItem *fileItem;
     [[NSNotificationCenter defaultCenter] postNotificationName:kSBUserInfoCurrentUserChangeNotification object:nil userInfo:@{kSBUserInfoNotificationKeyPath:@"user",kSBUserInfoNotificationValue:self}];
 }
 - (void)addObserve{
-    @weakify(self);
-    [[RACObserve(self,userId) skip:1] subscribeNext:^(id  _Nullable x) {
-        @strongify(self);
-        [self postValueChangeNotificationWithKey:@"userId" value:x];
-    }];
-    [[RACObserve(self,userName) skip:1] subscribeNext:^(id  _Nullable x) {
-        @strongify(self);
-        [self postValueChangeNotificationWithKey:@"userName" value:x];
-    }];
-    [[RACObserve(self,accout) skip:1] subscribeNext:^(id  _Nullable x) {
-        @strongify(self);
-        [self postValueChangeNotificationWithKey:@"account" value:x];
-    }];
+    for (NSString *key in self.class.propertyKeys.allObjects) {
+        [self addObserver:self forKeyPath:key options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+        
+    }
+//    [[RACObserve(self,userId) skip:1] subscribeNext:^(id  _Nullable x) {
+//        @strongify(self);
+//        [self postValueChangeNotificationWithKey:@"userId" value:x];
+//    }];
+//    [[RACObserve(self,userName) skip:1] subscribeNext:^(id  _Nullable x) {
+//        @strongify(self);
+//        [self postValueChangeNotificationWithKey:@"userName" value:x];
+//    }];
+//    [[RACObserve(self,accout) skip:1] subscribeNext:^(id  _Nullable x) {
+//        @strongify(self);
+//        [self postValueChangeNotificationWithKey:@"account" value:x];
+//    }];
 }
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
+    [self postValueChangeNotificationWithKey:keyPath value:[change objectForKey:@"new"]];    
+}
+
 - (void)postValueChangeNotificationWithKey:(NSString *)key value:(id)value{
     [[NSNotificationCenter defaultCenter] postNotificationName:kSBUserInfoValueChangeNotification object:nil userInfo:@{kSBUserInfoNotificationKeyPath:key,kSBUserInfoNotificationValue:self}];
 }

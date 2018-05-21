@@ -10,6 +10,9 @@
 #import "ZJExampleController.h"
 #import "SBNavigationController.h"
 
+//APP进入主业务通知
+NSString *const kAppEnterMainWorkNotification = @"kAppEnterMainWorkNotification";
+
 @implementation AppDelegate (Root)
 + (UIViewController *)applicationRoot{
     CYLTabBarController *tab = [[CYLTabBarController alloc] init];
@@ -20,7 +23,8 @@
     NSArray * tabBarItemsAttributes = @[dict1];
     tab.tabBarItemsAttributes = tabBarItemsAttributes;
     [tab setViewControllers:[self tabItems]];
-    
+    //发出通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:kAppEnterMainWorkNotification object:nil];
     return tab;
 }
 

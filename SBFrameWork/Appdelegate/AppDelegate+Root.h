@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+extern NSString *const kAppEnterMainWorkNotification;
 @interface AppDelegate (Root)
 + (UIViewController *)applicationRoot;
 @end

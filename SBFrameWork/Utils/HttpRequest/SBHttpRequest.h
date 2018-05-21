@@ -18,7 +18,7 @@ typedef void(^SBRequestCompletionFailureBlock)(YTKRequest *request,NSError * err
 
 @interface SBHttpRequest : YTKRequest
 //缓存时间 默认 -1 不缓存
-@property (assign,nonatomic) BOOL cacheInterval;
+@property (assign,nonatomic) NSInteger cacheInterval;
 //请求域名 如:http://www.baidu.com
 @property (copy,nonatomic) NSString *baseUrl;
 //请求目录 如: /login/beginLogin

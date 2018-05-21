@@ -34,11 +34,11 @@
 // properties without ivars, or properties on MHObject itself.
 /// 返回所有@property声明的属性，除了只读属性，以及属性列表不包括成员变量
 + (NSSet *)propertyKeys;
-
-// A dictionary representing the properties of the receiver.
-//
-// The default implementation combines the values corresponding to all
-// +propertyKeys into a dictionary, with any nil values represented by NSNull.
-// This property must never be nil.
+// @{propertyKeyName:value}
 @property (nonatomic, copy, readonly) NSDictionary *dictionaryValue;
+// wether filter value where the is null , Default 1,
+// no filter set 0. filter one super propertys can set filter = 2,two super propertys set filter = 3，and so on
+@property (nonatomic) NSInteger filterNull;
+//属性类型 如 {@"property":@"propertyClass"}
+@property (nonatomic) NSDictionary *propertyClassDict;
 @end

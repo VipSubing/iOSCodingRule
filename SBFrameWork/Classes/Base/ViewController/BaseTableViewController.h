@@ -35,7 +35,8 @@ typedef NS_ENUM(NSInteger,SBRequestStatus){
 @property (nonatomic,assign) UITableViewStyle tableViewStyle;
 //无数据时候占位代理服务
 @property (strong,nonatomic) EmptyDataSetServices *emptyServices;
-
+//没有数据时是否加载缓存数据 默认 no
+@property (nonatomic) BOOL loadCacheDatas;
 //默认请求方法 子类需覆盖
 - (void)requestList;
 //结束刷新状态

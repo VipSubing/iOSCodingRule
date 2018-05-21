@@ -10,7 +10,7 @@
 #define SBUserDefault [GVUserDefaults standardUserDefaults]
 @interface GVUserDefaults (CustomUser)
 //新版本
-@property (copy,nonatomic) NSString *latelyVesion;
+@property (copy,nonatomic) NSString *newVesion;
 //是否登陆
 @property (assign,nonatomic) BOOL isLogin;
 //同意协议

@@ -9,7 +9,7 @@
 #import "GVUserDefaults+CustomUser.h"
 
 @implementation GVUserDefaults (CustomUser)
-@dynamic latelyVesion;
+@dynamic newVesion;
 @dynamic isLogin;
 @dynamic IsDelegateAgree;
 @dynamic allowReceiveMessage;

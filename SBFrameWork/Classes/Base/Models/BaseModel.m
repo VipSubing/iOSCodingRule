@@ -14,6 +14,9 @@
 static void *SBObjectCachedPropertyKeysKey = &SBObjectCachedPropertyKeysKey;
 
 @implementation BaseModel
+{
+    BOOL _filterNullLock;
+}
 #pragma mark - public
 + (instancetype)modelWithDictionary:(NSDictionary *)jsonDict{
     id model = [[self alloc]initWithDictionary:jsonDict];
@@ -21,7 +24,9 @@ static void *SBObjectCachedPropertyKeysKey = &SBObjectCachedPropertyKeysKey;
     return model;
 }
 //对象创建完成
-- (void)objectInitialized{}
+- (void)objectInitialized{
+    _filterNull = 1;
+}
 //模型化完成
 - (void)modelingCompleted{}
 #pragma mark - NSCoding
@@ -56,12 +61,64 @@ static void *SBObjectCachedPropertyKeysKey = &SBObjectCachedPropertyKeysKey;
 //没有找到对应的key可以在这里处理
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key
 {
-    if ([key isEqualToString:@"id"]) {
-        [self setValue:value forKey:@"ID"];
+    
+}
+
+//根据类型 对应value为null情况下赋默认值 如 value为NSString类型 那么当value = null ,这里转成value = @""
+- (void)setValue:(id)value forKey:(NSString *)key{
+    [super setValue:[self ts_filterValue:value forKey:key] forKey:key
+     ];
+}
+- (void)setFilterNull:(NSInteger)filterNull{
+    if (_filterNull != filterNull) {
+        _filterNullLock = NO;
     }
-    if ([key isEqualToString:@"description"]) {
-        [self setValue:value forKey:@"desc"];
+    _filterNull = filterNull;
+}
+- (NSDictionary *)propertyClassDict{
+    if (_propertyClassDict == nil || !_filterNullLock) {
+        _filterNullLock = YES;
+        NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+        Class class = self.class;
+        for (int x = 0; x < _filterNull; x ++) {
+            unsigned int count;
+            objc_property_t* props = class_copyPropertyList(class, &count);
+            for (int i = 0; i < count; i++) {
+                objc_property_t property = props[i];
+                const char * name = property_getName(property);
+                NSString *propertyName = [NSString stringWithCString:name encoding:NSUTF8StringEncoding];
+                const char * type = property_getAttributes(property);
+                NSString *attr = [NSString stringWithCString:type encoding:NSUTF8StringEncoding];
+                [tempDic setObject:attr forKey:propertyName];
+            }
+            free(props);
+            if (class.superclass) {
+                class = class.superclass;
+            }else break;
+        }
+        _propertyClassDict = tempDic.copy;
     }
+    return _propertyClassDict;
+}
+- (id)ts_filterValue:(id)value forKey:(NSString *)key{
+    if ([value isKindOfClass:[NSNull class]] || !value) {
+        id new = nil;
+        // 获取key属性对应的数据类型
+        if ([self.propertyClassDict[key] containsString:@"NSNumber"]) {
+            new = @0;
+        }
+        if ([self.propertyClassDict[key] containsString:@"NSString"]) {
+            new = @"";
+        }
+        if ([self.propertyClassDict[key] containsString:@"NSArray"]) {
+            new = @[];
+        }
+        if ([self.propertyClassDict[key] containsString:@"NSDictionary"]) {
+            new = @{};
+        }
+        return new;
+    }
+    return value;
 }
 - (NSDictionary *)dictionaryValue {
     return [self dictionaryWithValuesForKeys:self.class.propertyKeys.allObjects];

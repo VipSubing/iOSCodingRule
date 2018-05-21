@@ -10,16 +10,16 @@
 #import "BaseModel.h"
 
 #define SBUserInfo [SBUserInfoAgent shareInfo]
-
+//password keychain path
 extern NSString *const kSBUserInfoAgentAccountKey;
-
+//当前用户更换通知
 extern NSString *const kSBUserInfoCurrentUserChangeNotification;
-
+//用户信息改变通知
 extern NSString *const kSBUserInfoValueChangeNotification;
 
-
+//获取通知中的信 keypath
 extern NSString *const kSBUserInfoNotificationKeyPath;
-
+//获取通知中的信 vaule  就是 userinfo 自己
 extern NSString *const kSBUserInfoNotificationValue;
 
 @interface SBUserInfoAgent : BaseModel
@@ -32,9 +32,9 @@ extern NSString *const kSBUserInfoNotificationValue;
 //password 的充分条件是 mobile code
 @property (copy,nonatomic) NSString *password;
 
-
+//老账号
 @property (copy,nonatomic) NSString *oldAccount;
-
+//老密码
 @property (copy,nonatomic) NSString *oldPassword;
 /**
  单例化一个用户信息代理, 首先会从序列化磁盘里面拿，没有则直接创建一个

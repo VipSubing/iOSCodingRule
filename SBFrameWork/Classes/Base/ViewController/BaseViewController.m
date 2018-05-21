@@ -8,7 +8,7 @@
 
 #import "BaseViewController.h"
 #import "UINavigationController+FDFullscreenPopGesture.h"
-
+#import "UMMobClick/MobClick.h"
 
 @interface BaseViewController ()
 
@@ -84,14 +84,19 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    NSString *pageName = [NSString stringWithFormat:@"%@",NSStringFromClass(self.class)];
+    [MobClick beginLogPageView:pageName];
     [self.cSignal.viewWillAppearSignal sendNext:nil];
 }
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     [self.cSignal.viewDidDisappearSignal sendNext:nil];
 }
+
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    NSString *pageName = [NSString stringWithFormat:@"%@",NSStringFromClass(self.class)];
+    [MobClick endLogPageView:pageName];
     [self.cSignal.viewWillDisappearSignal sendNext:nil];
 }
 - (void)dealloc{
