@@ -38,8 +38,7 @@ UIButton *commitButton = nil; (提交按钮)
 7.数据库操作  <Realm><br>
 ## 目录结构
 - 查看工程中试例 Login 和 Example
-![image](https://github.com/pubin563783417/iOSCodingRule/blob/master/ScreenPhotos/目录1.png)
-<br>
+![image](https://github.com/pubin563783417/iOSCodingRule/blob/master/ScreenPhotos/目录1.png)<br>
 ![image](https://github.com/pubin563783417/iOSCodingRule/blob/master/ScreenPhotos/目录2.png)
 
 ## 常用代码块
