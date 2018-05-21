@@ -641,11 +641,11 @@
 		1772EDB01FD785B300BB56A4 /* RDVTabBarController */ = {
 			isa = PBXGroup;
 			children = (
+				1772EDB41FD785B300BB56A4 /* RDVTabBar.h */,
 				1772EDB11FD785B300BB56A4 /* RDVTabBar.m */,
 				1772EDB21FD785B300BB56A4 /* RDVTabBarController.h */,
-				1772EDB31FD785B300BB56A4 /* RDVTabBarItem.h */,
-				1772EDB41FD785B300BB56A4 /* RDVTabBar.h */,
 				1772EDB51FD785B300BB56A4 /* RDVTabBarController.m */,
+				1772EDB31FD785B300BB56A4 /* RDVTabBarItem.h */,
 				1772EDB61FD785B300BB56A4 /* RDVTabBarItem.m */,
 			);
 			path = RDVTabBarController;

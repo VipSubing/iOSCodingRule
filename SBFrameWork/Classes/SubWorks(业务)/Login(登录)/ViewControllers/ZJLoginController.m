@@ -58,19 +58,21 @@
 - (void)loginAction:(UIButton *)sender{
     SBHttpRequest *request = [SBHttpRequest defaultRequest];
     NSMutableDictionary *param = [SBHttpRequest defaultParam];
-    [param setObject:SBUserInfo.userId forKey:@"userId"];
-    [param setObject:SBUserInfo.userName forKey:@"userName"];
-    [request sendRequestWithBaseUrl:@"" requestUrl:@"" requestParameter:param completionWithSuccess:^(YTKRequest * _Nonnull request, id  _Nonnull responseObject) {
-        if (request.responseStatusCode) {
+    [param setObject:@"18768105821" forKey:@"mobile"];
+    [param setObject:@"123456" forKey:@"password"];
+    [param setObject:@"3" forKey:@"platform"];
+    [request sendRequestWithBaseUrl:@"http://bayi-api.hzbayi.com:81/V2.1.0" requestUrl:@"user/login" requestParameter:param completionWithSuccess:^(YTKRequest * _Nonnull request, id  _Nonnull responseObject) {
+        if (responseObject) {
             //成功
+            //模拟跳转
+            [self toExample];
         }else{
             SBShowStatus(responseObject[@"msg"]);
         }
     } failure:^(YTKRequest * _Nonnull request, NSError * _Nonnull error) {
         SBShowStatus(error.userInfo[SBRequestFailureErrorDescKey]);
     }];
-    //模拟跳转
-    [self toExample];
+    
 }
 - (void)toExample{
     ZJExampleController *example = [[ZJExampleController alloc] init];

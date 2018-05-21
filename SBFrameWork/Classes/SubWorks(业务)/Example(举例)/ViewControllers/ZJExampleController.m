@@ -53,7 +53,7 @@
     [param setObject:@"12345" forKey:@"ids"];
     [reqeust sendRequestUrl:@"" requestParameter:param completionWithSuccess:^(YTKRequest * _Nonnull request, id  _Nonnull responseObject) {
         //数据操作
-        if (reqeust.responseStatusCode == 100) {
+        if (responseObject) {
             //返回成功，并且pageindex == 1，表示首次请求或者下拉刷新
             if (self.pageIndex == 1) {
                 //清空数据
