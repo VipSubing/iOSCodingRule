@@ -1,0 +1,80 @@
+//
+//  ZJLoginController.m
+//  MVVMFrameWork
+//
+//  Created by qyb on 2018/5/18.
+//  Copyright © 2018年 qyb. All rights reserved.
+//
+
+#import "ZJLoginController.h"
+#import "ZJExampleController.h"
+
+@interface ZJLoginController ()
+@property (nonatomic) UITextField *accountText;
+
+@property (nonatomic) UITextField *passwordText;
+
+@property (nonatomic) UIButton *loginBtn;
+
+@property (nonatomic) NSString *account;
+@property (nonatomic) NSString *password;
+@end
+
+@implementation ZJLoginController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    self.title = @"登录";
+    self.hideBack = YES;
+    [self initContent];
+    
+
+}
+- (instancetype)initWithAccount:(NSString *)account password:(NSString *)password callback:(void(^)(BOOL success,id other))callback{
+    return nil;
+}
+- (void)initContent{
+    _accountText = [[UITextField alloc] initWithFrame:CGRectMake(0, StatusAndNaviBarHeight, SCREEN_WIDTH, 50)];
+    _accountText.borderStyle = UITextBorderStyleRoundedRect;
+    _accountText.textColor = [UIColor darkTextColor];
+    _accountText.placeholder = @"账号";
+    [self.view addSubview:_accountText];
+    
+    _passwordText = [[UITextField alloc] initWithFrame:CGRectMake(0, _accountText.bottom+20, SCREEN_WIDTH, 50)];
+    _passwordText.borderStyle = UITextBorderStyleRoundedRect;
+    _passwordText.textColor = [UIColor darkTextColor];
+    _passwordText.placeholder = @"密码";
+    [self.view addSubview:_passwordText];
+    
+    _loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, _passwordText.bottom+20, SCREEN_WIDTH, 50)];
+    [_loginBtn addTarget:self action:@selector(loginAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_loginBtn setTitle:@"登录" forState:UIControlStateNormal];
+    _loginBtn.backgroundColor = StandardDefaultColor;
+    [self.view addSubview:_loginBtn];
+}
+
+#pragma mark - Action
+- (void)loginAction:(UIButton *)sender{
+    SBHttpRequest *request = [SBHttpRequest defaultRequest];
+    NSMutableDictionary *param = [SBHttpRequest defaultParam];
+    [param setObject:SBUserInfo.userId forKey:@"userId"];
+    [param setObject:SBUserInfo.userName forKey:@"userName"];
+    [request sendRequestWithBaseUrl:@"" requestUrl:@"" requestParameter:param completionWithSuccess:^(YTKRequest * _Nonnull request, id  _Nonnull responseObject) {
+        if (request.responseStatusCode) {
+            //成功
+        }else{
+            SBShowStatus(responseObject[@"msg"]);
+        }
+    } failure:^(YTKRequest * _Nonnull request, NSError * _Nonnull error) {
+        SBShowStatus(error.userInfo[SBRequestFailureErrorDescKey]);
+    }];
+    //模拟跳转
+    [self toExample];
+}
+- (void)toExample{
+    ZJExampleController *example = [[ZJExampleController alloc] init];
+    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:example];
+    [self presentViewController:navi animated:YES completion:nil];
+}
+@end

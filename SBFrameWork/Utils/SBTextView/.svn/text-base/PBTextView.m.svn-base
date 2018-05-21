@@ -1,0 +1,157 @@
+//
+//  PBTextView.m
+//  com.worldEyesCompany.babyhood
+//
+//  Created by qyb on 16/8/25.
+//  Copyright © 2016年 qyb. All rights reserved.
+//
+
+#import "PBTextView.h"
+
+#import "WTConst.h"
+@implementation PBTextView
+{
+    BOOL _isHoldState;
+    BOOL _isShowed;
+    BOOL _didConfigured;
+    BOOL _didSetMax;
+}
+- (instancetype)initWithFrame:(CGRect)frame{
+    if (self = [super initWithFrame:frame]) {
+        [self setup];
+    }
+    return self;
+}
+- (instancetype)init
+{
+    if (self = [super init]) {
+        [self setup];
+    }
+    return self;
+}
+- (void)setup{
+    if (!_didConfigured) {
+        
+        _contentColor = [UIColor blackColor];
+        _placeholderColor = [UIColor lightGrayColor];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startEditing:) name:UITextViewTextDidBeginEditingNotification object:self];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishEditing:) name:UITextViewTextDidEndEditingNotification object:self];
+        
+        _didConfigured = YES;
+    }
+    
+}
+//强制按text.length长度计算限制文本的最大长度 加强判断  设另个为0
+- (void)setMaxNumber:(NSUInteger)maxTextLength {
+    _maxNumber = maxTextLength;
+    self.delegate = (id<UITextViewDelegate>) self;
+    if (!_didSetMax) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChange) name:UITextViewTextDidChangeNotification object:self];
+        _didSetMax = YES;
+    }
+    
+}
+- (void)textViewDidChange {
+    
+    if (self.beyondMaxNotice && self.text.length>_maxNumber && _maxNumber && !_isShowed) {
+        LRUserToast(self.beyondMaxNotice);
+        _isShowed = YES;
+    }
+    if (_maxNumber) {
+        if (self.markedTextRange == nil && self.text.length > _maxNumber) {
+            self.text = [self.text substringToIndex:_maxNumber];
+        }
+    }
+    
+    if (_backLenght) {
+        _backLenght(self.text.length);
+    }
+    [self setNeedsDisplay];
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    //    self.placeHolderLabel.hidden = YES;
+    //
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    if (range.length == 1) {
+        return YES;
+    }
+    if (_maxNumber && self.text.length > _maxNumber) {
+        return NO;
+    }
+    return YES;
+}
+
+- (void)setPlaceholder:(NSString *)place
+{
+    _placeholder = place;
+    _isHoldState = YES;
+    [self finishEditing:nil];
+}
+- (void)setPlaceholderColor:(UIColor *)color
+{
+    _placeholderColor = color;
+    super.textColor = color;
+}
+
+#pragma mark - super
+
+- (void)setTextColor:(UIColor *)textColor
+{
+    [super setTextColor:textColor];
+    
+    _contentColor = textColor;
+}
+
+- (NSString *)text
+{
+    if ([super.text isEqualToString:_placeholder] && _isHoldState) {
+        return @"";
+    }
+    return [super text];
+}
+
+- (void)setText:(NSString *)string
+{
+    if (string == nil || string.length == 0) {
+        return;
+    }
+    
+    super.textColor = _contentColor;
+    [super setText:string];
+}
+
+
+
+#pragma mark - notification
+
+- (void)startEditing:(NSNotification *)notification
+{
+    if ([super.text isEqualToString:_placeholder] && _isHoldState) {
+        super.textColor = _contentColor;
+        super.text = @"";
+        _isHoldState = NO;
+    }
+}
+
+- (void)finishEditing:(NSNotification *)notification
+{
+    if (super.text.length == 0) {
+        super.textColor = _placeholderColor;
+        super.text = _placeholder;
+        _isHoldState = YES;
+    }
+    else{
+        super.textColor = _contentColor;
+        _isHoldState = NO;
+    }
+}
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+@end

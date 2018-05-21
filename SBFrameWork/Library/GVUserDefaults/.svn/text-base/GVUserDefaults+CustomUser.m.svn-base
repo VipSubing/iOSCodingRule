@@ -1,0 +1,19 @@
+//
+//  GVUserDefaults+CustomUser.m
+//  XuYouProduct
+//
+//  Created by bayi on 2017/2/14.
+//  Copyright © 2017年 qyb. All rights reserved.
+//
+
+#import "GVUserDefaults+CustomUser.h"
+
+@implementation GVUserDefaults (CustomUser)
+@dynamic isFirstFaunch;
+@dynamic isVersionFaunch;
+@dynamic isLogin;
+@dynamic todayDate;
+@dynamic JSPatchVesionCode;
+@dynamic IsDelegateAgree;
+@dynamic MainFunctionUnitSource;
+@end

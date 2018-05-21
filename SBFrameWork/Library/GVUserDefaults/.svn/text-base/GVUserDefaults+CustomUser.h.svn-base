@@ -1,0 +1,25 @@
+//
+//  GVUserDefaults+CustomUser.h
+//  XuYouProduct
+//
+//  Created by bayi on 2017/2/14.
+//  Copyright © 2017年 qyb. All rights reserved.
+//
+
+#import "GVUserDefaults.h"
+#define GVUserShare [GVUserDefaults standardUserDefaults]
+@interface GVUserDefaults (CustomUser)
+//第一次安装启动
+@property (assign,nonatomic) BOOL isFirstFaunch;
+//新版本第一次启动
+@property (copy,nonatomic) NSString * isVersionFaunch;
+//是否登陆
+@property (assign,nonatomic) BOOL isLogin;
+//今天第一次启动
+@property (copy,nonatomic) NSString * todayDate;
+//JSPatch 版本
+@property (assign,nonatomic) NSInteger JSPatchVesionCode;
+//同意协议
+@property (assign,nonatomic) BOOL IsDelegateAgree;
+@property (strong,nonatomic) NSArray *MainFunctionUnitSource;
+@end

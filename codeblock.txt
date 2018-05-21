@@ -2,5 +2,22 @@ UILabel *label = [[UILabel alloc] initWithFrame:frame];
 label.text = text;
 label.textColor = color;
 label.font = font;
+label.numberOfLines = 0;
 label.textAlignment = textAlignment;
 label.backgroundColor = [UIColor clearColor];
+
+UIButton *btn = [[UIButton alloc] initWithFrame:frame];
+[btn setTitle:title forState:UIControlStateNormal];
+[btn setTitleColor:color forState:UIControlStateNormal];
+[btn.titleLabel setFont:font];
+[btn setBackgroundImage:backgroundImage forState:UIControlStateNormal];
+[btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+
+
+UITextField *textField = [[UITextField alloc] initWithFrame:frame];
+textField.placeholder = placeholder;
+textField.textColor = color;
+textField.font = font;
+textField.secureTextEntry = secureTextEntry;
+textField.borderStyle = UITextBorderStyleLine;
+textField.delegate = delegate;

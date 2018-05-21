@@ -1,0 +1,63 @@
+//
+//  RDVTabBarController+initialize.m
+//  XuYouProduct
+//
+//  Created by bayi on 2017/3/3.
+//  Copyright © 2017年 qyb. All rights reserved.
+//
+
+#import "RDVTabBarController+initialize.h"
+#import "UserUpNoticeView.h"
+#import "EMAlertView.h"
+#import "LoginViewController.h"
+
+#import <objc/runtime.h>
+@interface RDVTabBarController()
+@property (assign,nonatomic) BOOL lock;
+@end
+@implementation RDVTabBarController (initialize)
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    if (!self.lock) {
+        self.lock = YES;
+        [UserUpNoticeView Check_the_update];
+        [self loginValidation];
+    }
+}
+- (void)setLock:(BOOL)lock{
+    objc_setAssociatedObject(self, @selector(lock), @(lock), OBJC_ASSOCIATION_RETAIN);
+}
+- (BOOL)lock{
+    return [objc_getAssociatedObject(self, _cmd) boolValue];
+}
+- (void)loginValidation{
+ 
+    NSDictionary *dic = [[NSUserDefaults standardUserDefaults] objectForKey:login_information];
+    if (dic == nil) {
+        return;
+    }
+    NSString *phone = dic[@"modnum"];
+    NSString *password = dic[@"password"];
+    NSDictionary *paramter = [NSDictionary dictionaryWithObjects:@[phone,password,@"3"] forKeys:@[@"mobile",@"password",@"platform"]];
+    [[LDHHTTPSessionManager shareedHTTPSessionManager] post:URLLOGIN parameters:paramter netIdentifier:URLLOGIN success:^(id responseObject) {
+        if ([responseObject[@"success"] isEqualToString:@"true"]) {
+            //成功
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:login_unusual];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }else{
+            //失败
+            UIAlertController *Alert = [UIAlertController alertControllerWithTitle:@"登录验证" message:@"验证失败，请重新登录" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                LoginViewController *login = [[LoginViewController alloc] init];
+                [UIApplication sharedApplication].keyWindow.rootViewController = login;
+            }];
+            [Alert addAction:action];
+            [self presentViewController:Alert animated:YES completion:nil];
+        }
+        
+    } failure:^(NSError *error) {
+    }];
+}
+
+@end

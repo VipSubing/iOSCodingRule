@@ -37,8 +37,12 @@ UIButton *commitButton = nil; (提交按钮)
 6.使用git管理代码，团队开发，目前放在OSChina上，请下载SourceTree客户端进行git操作.<br>
 7.数据库操作  <Realm><br>
 ## 目录结构
+- 查看工程中试例 Login 和 Example
 ![image](https://github.com/pubin563783417/iOSCodingRule/blob/master/ScreenPhotos/目录1.png)
 <br>
 ![image](https://github.com/pubin563783417/iOSCodingRule/blob/master/ScreenPhotos/目录2.png)
 
+## 常用代码块
+- 自己设置在本地代码块中，加快开发效率<br>
+https://github.com/pubin563783417/iOSCodingRule/blob/master/codeblock.txt
 

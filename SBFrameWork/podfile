@@ -1,0 +1,35 @@
+platform:ios,'8.0'
+target "MVVMFrameWork" do
+pod 'AFNetworking', '~> 3.1.0'
+pod 'SDWebImage', '~> 4.2.2'
+pod 'Masonry', '~> 1.1.0'
+pod 'SVProgressHUD'
+pod 'DZNEmptyDataSet'
+pod 'MJExtension', '~> 3.0.13'
+pod 'MLeaksFinder'
+pod 'WebViewJavascriptBridge', '~> 6.0.2'
+pod 'ReactiveObjC', '~> 3.0.0'
+pod 'SSKeychain', '1.2.3'
+pod 'FMDB', '2.6.2'
+pod 'TZImagePickerController', '~> 1.9.5'
+pod 'SDCycleScrollView', '~> 1.74'
+pod 'IQKeyboardManager', '~> 5.0.6'
+pod 'YYCategories', '~> 1.0.4'
+pod 'YYText', '~> 1.0.7'
+# 字典转模型
+pod 'YYModel'                           , '1.0.4'
+pod 'pop', '~> 1.0.10'
+pod 'JPFPSStatus', '~> 0.1.1'
+pod 'YTKNetwork', '~> 2.0.4'
+#圆角处理
+pod 'ZYCornerRadius'                    , '1.0.2'
+#消息显示
+pod 'WZLBadge'                          , '1.2.6'
+# 非常强大的Objective-C库的扩展
+pod 'libextobjc'                        , '0.4.1'
+#debug kit
+pod 'FLEX', '~> 2.0', :configurations => ['Debug']
+pod 'Toast'
+#下拉刷新控件
+pod 'CBStoreHouseRefreshControl'
+end

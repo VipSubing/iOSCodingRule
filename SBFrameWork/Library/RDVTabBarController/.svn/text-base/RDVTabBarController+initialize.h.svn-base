@@ -1,0 +1,13 @@
+//
+//  RDVTabBarController+initialize.h
+//  XuYouProduct
+//
+//  Created by bayi on 2017/3/3.
+//  Copyright © 2017年 qyb. All rights reserved.
+//
+
+#import "RDVTabBarController.h"
+
+@interface RDVTabBarController (initialize)
+
+@end

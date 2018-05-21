@@ -1,0 +1,27 @@
+//
+//  PBTextView.h
+//  com.worldEyesCompany.babyhood
+//
+//  Created by bayi on 16/8/25.
+//  Copyright © 2016年 bayi. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface PBTextView : UITextView
+typedef void (^backTextLength)(NSInteger length);
+/** 占位文字 */
+@property (nonatomic, copy) NSString *placeholder;
+/** 占位文字颜色 */
+@property (nonatomic, strong) UIColor *placeholderColor;
+
+@property (nonatomic, strong) UIColor *contentColor;
+
+@property (assign,nonatomic) BOOL editing;
+
+@property (assign,nonatomic) NSUInteger maxNumber;
+
+@property (copy,nonatomic) backTextLength backLenght;
+
+@property (copy,nonatomic) NSString *beyondMaxNotice;
+@end
