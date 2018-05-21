@@ -22,6 +22,12 @@ UIButton *commitButton = nil; (提交按钮)
 ### 公共API设计规范
 格式驼峰 ，简单明了 参照系统API  例：<br>
 — (instancetype)initWithAccount:(NSString *)account password:(NSString *)password callback:(void(^)(BOOL success,id other))callback;
+### git管理
+- 请先下载SourceTree 进行版本管理。
+- 远程仓库暂定为OSChina
+- 及时提交和推送代码，基本1天要合并至少一次，新完成模块及时推送。
+- 遇到冲突及时沟通
+- 避免和他人写同一个模块
 ## 项目开始
 1.APP采用object-c纯代码开发，末使用故事面板(storyboard)<br>
 2.布局我们采用Masonry布局。<br>

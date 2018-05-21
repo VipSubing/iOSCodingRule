@@ -1,0 +1,6 @@
+UILabel *label = [[UILabel alloc] initWithFrame:frame];
+label.text = text;
+label.textColor = color;
+label.font = font;
+label.textAlignment = textAlignment;
+label.backgroundColor = [UIColor clearColor];
